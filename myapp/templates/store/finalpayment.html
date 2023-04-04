@@ -1,0 +1,52 @@
+{% extends 'store/layouts/main.html' %}
+{% block title %}
+payment| ShopKart
+{% endblock title %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+{% block content %} 
+<section class="bg-light py-4 my-5" style="min-height:600px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h4 class="mb-3">payment</h4>
+        <hr style="border-color:#b8bfc2;">
+      </div>
+<div class="">
+  
+
+<a href="{% url 'pay' %}" id="pay-btn" class="btn btn-primary btn-sm"> Are you ready to pay now ?</a>
+
+</div>
+</section>
+<script>
+
+var options = {
+       
+    // Enter the Key ID generated from the Dashboard
+    key: "{{ razorpay_merchant_key }}",
+     
+    // Amount is in currency subunits.
+    // Default currency is INR. Hence,
+    // 50000 refers to 50000 paise
+    amount: "{{ razorpay_amount }}",
+    currency: "{{ currency }}",
+     
+    // Your/store name.
+    name: "Dj Razorpay",
+     
+    // Pass the `id` obtained in the response of Step 1
+    order_id: "{{ razorpay_order_id }}",
+    callback_url: "{{ callback_url }}",
+  };
+   
+  // initialise razorpay with the options.
+  var rzp1 = new Razorpay(options);
+   
+  // add event listener to the payment button.
+  document.getElementById("pay-btn").onclick = function (e) {
+    rzp1.open();
+    e.preventDefault();
+    console.log("hgiugiu");
+  };
+</script>
+{% endblock content %}
